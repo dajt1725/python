@@ -3,66 +3,38 @@ import random
 root = Tk()
 root.geometry("1000x1000")
 
-root.columnconfigure(0)
-root.columnconfigure(1)
-root.columnconfigure(2)
-root.columnconfigure(3)
-root.columnconfigure(4)
-root.columnconfigure(5)
-root.columnconfigure(6)
-root.columnconfigure(7)
-root.columnconfigure(8)
-root.columnconfigure(9)
+COLS = 10
+ROWS = 10
+ISLAND_CHANCE = 15
 
-root.rowconfigure(0)
-root.rowconfigure(1)
-root.rowconfigure(2)
-root.rowconfigure(3)
-root.rowconfigure(4)
-root.rowconfigure(5)
-root.rowconfigure(6)
-root.rowconfigure(7)
-root.rowconfigure(8)
-root.rowconfigure(9)
+for i in range(COLS):
+    root.columnconfigure(i)
 
-Oce1 = PhotoImage(file="Ocean1.gif")
-Oce2 = PhotoImage(file="Ocean2.gif")
-Oce3 = PhotoImage(file="Ocean3.gif")
-Ild1 = PhotoImage(file="Island1.gif")
-Ild2 = PhotoImage(file="Island2.gif")
+for i in range(ROWS):
+    root.rowconfigure(i)
 
-Tident = 0
+oce = []
+for i in ("Ocean1.gif", "Ocean2.gif", "Ocean3.gif"):
+    oce.append(PhotoImage(file=i)) 
+ild = []
+for i in ("Island1.gif", "Island2.gif"):
+    ild.append(PhotoImage(file=i)) 
+
+tiles = {}
 Xident = 0
 Yident = 0
 
-while Tident < 100:
-    gen1 = random.randint(1, 4)
-    if gen1 == 1:
-        Tile = Label(root, image=Oce1)
-        Tile.image = Oce1
-        Tile.grid(row=Xident, column=Yident)
-    elif gen1 == 2:
-        Tile = Label(root, image=Oce2)
-        Tile.image = Oce2
-        Tile.grid(row=Xident, column=Yident)
-    elif gen1 == 3:
-        Tile = Label(root, image=Oce3)
-        Tile.image = Oce3
-        Tile.grid(row=Xident, column=Yident)
-    elif gen1 == 4:
-        gen2 = random.randint(1, 2)
-        if gen2 == 1:
-            Tile = Label(root, image=Ild1)
-            Tile.Image = Ild1
-            Tile.grid(row=Xident, column=Yident)
-        elif gen2 == 2:
-            Tile = Label(root, image=Ild2)
-            Tile.Image = Ild2
-            Tile.grid(row=Xident, column=Yident)
-    Tident += 1
-    if Xident < 10:
-        Xident += 1
-    elif Xident == 10:
+for tile_no in range(ROWS*COLS):
+    Tile = Label(root)
+    a = random.randint(0,99)
+    if a < ISLAND_CHANCE:
+        Tile.image = random.choice(ild)
+    else:
+        Tile.image = random.choice(oce)
+    Tile.grid(row=Xident, column=Yident)
+    tiles[tile_no] = Tile
+    Xident += 1
+    elif Xident >= COLS:
         Xident = 0
         Yident += 1
 
