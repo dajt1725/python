@@ -1,4 +1,4 @@
-from tkinter import *
+from Tkinter import *
 import random
 root = Tk()
 root.geometry("1000x1000")
@@ -25,16 +25,17 @@ Xident = 0
 Yident = 0
 
 for tile_no in range(ROWS*COLS):
-    Tile = Label(root)
     a = random.randint(0,99)
     if a < ISLAND_CHANCE:
-        Tile.image = random.choice(ild)
+        chosen = random.choice(ild)
     else:
-        Tile.image = random.choice(oce)
+        chosen = random.choice(oce)
+    Tile = Label(root, image=chosen)
+    Tile.image = chosen
     Tile.grid(row=Xident, column=Yident)
     tiles[tile_no] = Tile
     Xident += 1
-    elif Xident >= COLS:
+    if Xident >= COLS:
         Xident = 0
         Yident += 1
 
